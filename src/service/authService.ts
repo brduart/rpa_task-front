@@ -6,7 +6,7 @@ interface LoginResponse {
 
 export const authService = {
   login: async (name: string, password: string): Promise<LoginResponse> => {
-    const response = await api.post<LoginResponse>("/users/login", {
+    const response = await api.post<LoginResponse>("/auth/login", {
       name,
       password,
     });
@@ -14,7 +14,7 @@ export const authService = {
   },
 
   register: async (name: string, password: string): Promise<LoginResponse> => {
-    const response = await api.post<LoginResponse>("/users", {
+    const response = await api.post<LoginResponse>("/auth/register", {
       name,
       password,
       role: "ROLE_USER",
