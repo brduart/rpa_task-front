@@ -31,6 +31,8 @@ const RpaPage = () => {
   //RPA DATA FINAL
   const [dataFinal, setDataFinal] = useState(null);
 
+  const [send, setSend] = useState(false);
+
   //REFS
   const msgRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLSpanElement>(null);
@@ -61,7 +63,7 @@ const RpaPage = () => {
   };
 
   const sendRpaResult = async () => {
-    const saveData = await rpaService.editData(id, status, dataInit, dataFinal);
+    await rpaService.editData(id, status, dataInit, dataFinal);
   };
 
   //CLOSE THE MODAL AND SEND THE MESSAGE TO API
@@ -86,7 +88,6 @@ const RpaPage = () => {
 
   //REFRESH STATUS
   useEffect(() => {
-    sendRpaResult();
     refreshData(
       statusRef,
       initDataRef,
@@ -96,6 +97,12 @@ const RpaPage = () => {
       dataFinal
     );
   }, [status]);
+
+  useEffect(() => {
+    if (status !== null && dataInit !== null && dataFinal !== null) {
+      sendRpaResult();
+    }
+  }, [status, dataInit, dataFinal]);
 
   return (
     <div className="flex-col h-[85vh] w-[80%] flex items-center justify-center">
